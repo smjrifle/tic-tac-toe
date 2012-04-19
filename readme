@@ -1,0 +1,5 @@
+The KeyboardFunc is used to switch between Ortho and Perspective view of an object. The mouseFunc is used to start the game, Left click will result in user selecting  O thus becoming second player while Right Click will result in user selecting X and becoming first player.
+
+Two cylinders are used for making the X and one Torus is used for drawing O. The text on the screen is kept using glutBitmapCharacter function. Lightening function is also used in this project. 
+
+The Timer Function is used for spinning the cube and updating the screen after every click so that the input from cpu/user can be seen in screen. Other than thsese functions we have used other basic openGL and C codes and functions. The CPU move logic is carried out in c.
