@@ -1,3 +1,10 @@
+// Glut_ttt.c
+// Tic Tac Toe or X's and O's.
+// Keyboard input
+// 'v' = view ortho/perspective
+// 'l' = lighting on/off
+
+
 //#include <windows.h>  // This header file will be needed for some windows compilers
 //#include <GL/gl.h>   // gl.h and glu.h also maybe needed for some compilers
 //#include <GL/glu.h>
@@ -20,7 +27,7 @@ int mouse_x, mouse_y, Win_x, Win_y, object_select;
 static int view_state = 0, light_state = 0;
 
 // Use to spin X's and O's
-int spin, spinboxes;
+int spin, spinboxes,count=0,j=0,k=0,c=0,d=0;
 
 // Win = 1 player wins, -1 computer wins, 2 tie.
 // player or computer; 1 = X, -1 = O
@@ -54,7 +61,7 @@ GLUquadricObj *Cylinder;
 void init_game(void)
 {
 int i;
-
+count++;
 // Clear map for new game
 for( i = 0; i < 9; i++)
 	{
@@ -103,10 +110,12 @@ int i, t;
 for( i = 0; i < 8; i++)
 	{
    	 t = box_map[box[i][0]] + box_map[box[i][1]] + box_map[box[i][2]];
+	 
 	 if ( (t == 2) || ( t == -2) )
 	   {
 	   // Find empty
-	   if (box_map[box[i][0]] == 0) box_map[box[i][0]] = computer;
+	   
+		if (box_map[box[i][0]] == 0) box_map[box[i][0]] = computer;
 	   if (box_map[box[i][1]] == 0) box_map[box[i][1]] = computer;
 	   if (box_map[box[i][2]] == 0) box_map[box[i][2]] = computer;
        return( 1 );
@@ -119,35 +128,71 @@ return( 0 );
 int check_corner(void)
 {
 int i;
-
-if ( box_map[0] == 0)
+c++;
+j++;
+printf("%d",j);
+if(c==1)
+{
+	
+	if(box_map[0] == 0 && j==1)
 	{
 	box_map[0] = computer;
 	i = 1;
 	return( 1 );
     }
 
-if ( box_map[2] == 0)
+if ( box_map[2] == 0 && j==2)
 	{
 	box_map[2] = computer;
 	i = 1;
 	return( 1 );
     }
 
-if ( box_map[6] == 0)
+if ( box_map[6] == 0 && j==3)
 	{
 	box_map[6] = computer;
 	i = 1;
 	return( 1 );
     }
 
-if ( box_map[8] == 0)
+if ( box_map[8] == 0 && j==4)
 	{
 	box_map[8] = computer;
 	i = 1;
 	return( 1 );
     }
+}
+else
+{
+	if(box_map[0] == 0 )
+	{
+	box_map[0] = computer;
+	i = 1;c=0;
+	return( 1 );
+    }
 
+if ( box_map[2] == 0)
+	{
+	box_map[2] = computer;
+	i = 1;c=0;
+	return( 1 );
+    }
+
+if ( box_map[6] == 0)
+	{
+	box_map[6] = computer;
+	i = 1;c=0;
+	return( 1 );
+    }
+
+if ( box_map[8] == 0)
+	{
+	box_map[8] = computer;
+	i = 1;c=0;
+	return( 1 );
+}
+}
+if(j>4) j=0;
 return( 0 );
 }
 
@@ -155,33 +200,69 @@ return( 0 );
 int check_row(void)
 {
 
-if ( box_map[4] == 0)
+d++;
+if(d==1)
+{
+	k++;
+if ( box_map[4] == 0 && k==1)
 	{
 	box_map[4] = computer;
 	return( 1 );
     }
 
-if ( box_map[1] == 0)
+if ( box_map[1] == 0 && k==2)
 	{
 	box_map[1] = computer;
 	return( 1 );
     }
 
-if ( box_map[3] == 0)
+if ( box_map[3] == 0 && k==3)
 	{
 	box_map[3] = computer;
 	return( 1 );
     }
-if ( box_map[5] == 0)
+if ( box_map[5] == 0 && k==4)
 	{
 	box_map[5] = computer;
 	return( 1 );
     }
-if ( box_map[7] == 0)
+if ( box_map[7] == 0 && k==5)
 	{
 	box_map[7] = computer;
 	return( 1 );
     }
+}
+else
+{
+	if ( box_map[4] == 0)
+	{
+	box_map[4] = computer;d=0;
+	return( 1 );
+    }
+
+if ( box_map[1] == 0)
+	{
+	box_map[1] = computer;d=0;
+	return( 1 );
+    }
+
+if ( box_map[3] == 0)
+	{
+	box_map[3] = computer;d=0;
+	return( 1 );
+    }
+if ( box_map[5] == 0)
+	{
+	box_map[5] = computer;d=0;
+	return( 1 );
+    }
+if ( box_map[7] == 0)
+	{
+	box_map[7] = computer;d=0;
+	return( 1 );
+    }
+}
+if(k>5) k=0;
     
 return( 0 );
 }
@@ -189,10 +270,24 @@ return( 0 );
 // logic for computer's turn
 int computer_move()
 {
-if ( blocking_win() == 1) return( 1 );
-if ( check_corner() == 1) return( 1 );
-if ( check_row() == 1) return( 1 );
-
+if ( blocking_win() == 1) 
+{
+	return( 1 );
+}
+if((count%2)==0)
+{
+	if ( check_row() == 1 ) 
+	{
+		return( 1 );
+	}
+}
+else
+{
+	if ( check_corner() == 1)
+	{
+		return( 1 );
+	}
+}
 return( 0 );
 }
 
@@ -453,7 +548,7 @@ if ( start_game == 0)
       {
        player = 1;
 	   computer = -1;
-	   init_game();
+	   init_game();	
 	   return;
       }
 
@@ -479,23 +574,26 @@ if ( start_game == 1)
 	        win = check_move();
 	        if (win == 1)
 	           {
-	           start_game = 0;
-               return;
-               }
-              computer_move();
-	          win = check_move();
-	          if (win == 1)
-	             {
-                  win = -1;
-                  start_game = 0;
-                  }
+				start_game = 0;
+				return;
+				}
+				computer_move();
+				win = check_move();
+	         if (win == 1)
+	            {
+                 win = -1;
+                 start_game = 0;
+				 return;
+                 }
               }
             }
 	  }
    }
 
-if ( win == 2 )start_game = 0;
-
+if ( win == 2 )
+{
+	start_game = 0;
+}
 }
 
 
@@ -517,4 +615,6 @@ int main(int argc, char** argv)
    glutMainLoop();
    return 0;
 }
+
+
 
